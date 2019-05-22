@@ -25,13 +25,13 @@ selectSample <- function(frame, outstrata, writeFiles = FALSE,verbatim=TRUE) {
     colnames(frame) <- toupper(colnames(frame))
     colnames(outstrata) <- toupper(colnames(outstrata))
     outstrata$SOLUZ <- round(outstrata$SOLUZ)  # rounding of allocation numbers
-    numdom <- length(levels(droplevels(as.factor(frame$DOMAINVALUE))))
+    numdom <- length(levels(droplevels(as.factor(frame$DOMAINVALUE1))))
     samptot <- NULL
     chktot <- NULL
     # begin domains cycle
 	if (numdom > 1) {
 		for (d in (1:numdom)) {
-			domframe <- frame[frame$DOMAINVALUE == d, ]
+			domframe <- frame[frame$DOMAINVALUE1 == d, ]
 			domstrata <- outstrata[outstrata$DOM1 == d, ]
 			strataord <- domstrata[order(as.numeric(domstrata$STRATO)), ]
 			lista <- domframe
@@ -41,7 +41,7 @@ selectSample <- function(frame, outstrata, writeFiles = FALSE,verbatim=TRUE) {
 				repl = FALSE)
 			samp <- data.frame(listaord[s, ], WEIGHTS = attr(s, "WEIGHTS"))
 			samptot <- rbind(samptot, samp)
-			chk <- data.frame(DOMAINVALUE = d, STRATO = strataord$STRATO, 
+			chk <- data.frame(DOMAINVALUE1 = d, STRATO = strataord$STRATO, 
 				Nh_frame = as.vector(table(listaord$STRATO)), Nh_strata = strataord$N, 
 				planned_units = strataord$SOLUZ, selected_units = as.vector(table(samp$STRATO)), 
 				sum_of_wgts = tapply(samp$WEIGHTS, samp$STRATO, sum))
@@ -59,7 +59,7 @@ selectSample <- function(frame, outstrata, writeFiles = FALSE,verbatim=TRUE) {
 				repl = FALSE)
 		samp <- data.frame(listaord[s, ], WEIGHTS = attr(s, "WEIGHTS"))
 		samptot <- rbind(samptot, samp)
-		chk <- data.frame(DOMAINVALUE = strataord$DOM1, STRATO = strataord$STRATO, 
+		chk <- data.frame(DOMAINVALUE1 = strataord$DOM1, STRATO = strataord$STRATO, 
 				Nh_frame = as.vector(table(listaord$STRATO)), Nh_strata = strataord$N, 
 				planned_units = strataord$SOLUZ, selected_units = as.vector(table(samp$STRATO)), 
 				sum_of_wgts = tapply(samp$WEIGHTS, samp$STRATO, sum))
@@ -88,6 +88,6 @@ selectSample <- function(frame, outstrata, writeFiles = FALSE,verbatim=TRUE) {
             row.names = FALSE, col.names = TRUE, quote = FALSE)
     outstrata$FPC <- outstrata$SOLUZ/outstrata$N
 	fpc <- outstrata[, c("DOM1","STRATO","FPC")]
-	samptot <- merge(samptot, fpc, by.x = c("DOMAINVALUE","STRATO"),by.y=c("DOM1","STRATO"),all.x=TRUE)
+	samptot <- merge(samptot, fpc, by.x = c("DOMAINVALUE1","STRATO"),by.y=c("DOM1","STRATO"),all.x=TRUE)
     return(samptot)
 }
