@@ -18,7 +18,10 @@ swissmunicipalities$id <- c(1:nrow(swissmunicipalities))
 #------------------------------------------------------------------------
 
 # Build sampling frame
-swissmunicipalities$sizeclass <- rep(1:3,ceiling(nrow(swissmunicipalities)/3))[1:nrow(swissmunicipalities)]
+swissmunicipalities$sizeclass <- as.numeric(cut(
+  swissmunicipalities$Alp, breaks = c(-Inf,0,Inf)
+  ))
+table(swissmunicipalities$sizeclass)
 swissframe <- buildFrameDF(df = swissmunicipalities,
                            id = "id",
                            X = c("Surfacesbois",
