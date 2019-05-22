@@ -16,7 +16,9 @@ buildFrameDF <- function(df,id,X,Y,domainvalue) {
        stop(msg)
     }
   }
-  if (!domainvalue %in% vars) stop("Domain name not in the frame variables")  
+  if (any(!domainvalue %in% vars)){
+    stop("Not all domain variables are present in the frame variables")  
+  } 
   dframe <- NULL
   stmt <- paste("dframe$id <- df$",as.character(id),sep="")
   eval(parse(text=stmt))
@@ -28,8 +30,11 @@ buildFrameDF <- function(df,id,X,Y,domainvalue) {
     target <- paste("dframe$Y",i," <- df$",as.character(Y[i]),sep="")
     eval(parse(text=target))
   }
-  stmt <- paste("dframe$domainvalue <- df$",as.character(domainvalue),sep="")
-  eval(parse(text=stmt))
+  for (i in (1:length(domainvalue))) {
+    stmt <- paste0("dframe$domainvalue",i," <- df$",as.character(domainvalue[i]),sep="")
+    eval(parse(text=stmt))
+  }
+  
   dframe <- as.data.frame(dframe)
   return(dframe)
 }
