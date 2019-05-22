@@ -5,7 +5,7 @@ expected_CV <- function (strata, newframe = NULL) {
   nvars <- (ncol(strata) - 6) / 2
   cv <- matrix(NA,nrow=ndom,ncol=nvars)
   colnames(cv) <- paste("cv(Y",c(1:nvars),")",sep="")
-  rownames(cv) <- paste("DOMAIN1_value:",c(1:ndom),sep="")
+  rownames(cv) <- paste("optimizedDOMAIN1_value:",c(1:ndom),sep="")
   k<-0
   for (i in (as.numeric(levels(as.factor(strata$DOM1))))) {
     k<-k+1
