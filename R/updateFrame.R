@@ -29,9 +29,9 @@ updateFrame <- function(frame, newstrata, writeFiles = FALSE) {
     newstrata$STRATUM <- as.character(newstrata$STRATUM)
     labels <- as.data.frame(cbind(newstrata$STRATUM, newstrata$DOM1, 
         newstrata$LABEL))
-    colnames(labels) <- c("STRATUM", "DOMAINVALUE", "LABEL")
-    frame$DOMAINVALUE <- as.factor(frame$DOMAINVALUE)  # new line
-    framenew <- merge(frame, labels, by = c("DOMAINVALUE", "STRATUM"))
+    colnames(labels) <- c("STRATUM", "DOMAINVALUE1", "LABEL")
+    frame$DOMAINVALUE1 <- as.factor(frame$DOMAINVALUE1)  # new line
+    framenew <- merge(frame, labels, by = c("DOMAINVALUE1", "STRATUM"))
 	framenew$STRATUM <- as.factor(framenew$STRATUM)
 	framenew$LABEL <- as.character(framenew$LABEL)
 	framenew$LABEL <- as.integer(framenew$LABEL)
