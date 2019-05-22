@@ -1,6 +1,5 @@
 visualise <- function(output){
-#
-#output <-cbind(rownames(output),output)
+output<-as.data.frame(outout)
 output$id <-as.character(rownames(output))
 output$id <- factor (output$id, levels = output$id[length(output$id):1])
 output.m<-melt(output )
