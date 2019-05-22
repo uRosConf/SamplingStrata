@@ -1,4 +1,4 @@
-expected_CV <- function (strata) {
+expected_CV <- function (strata, frame = NULL) {
   M_h <- S_h <- NULL
   if (is.null(strata$SOLUZ)) stop("There is no allocation of units in strata")
   ndom <- length(unique(strata$DOM1))
